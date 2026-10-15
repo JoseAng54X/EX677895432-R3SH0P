@@ -63,27 +63,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center space-x-3 relative">
-                    <div onclick="toggleUserMenu(event)" class="w-11 h-11 rounded-full bg-gray-50 border border-gray-200 shadow-sm flex items-center justify-center overflow-hidden text-gray-700 font-bold cursor-pointer hover:border-reshop-orange transition-colors" title="Cuenta">
-                        <i class="fa-solid fa-user text-sm"></i>
-                    </div>
-                    <div id="user-dropdown-menu" class="hidden absolute left-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 top-12">
-                        <div class="px-4 py-2 border-b border-gray-100">
-                            <p class="text-xs font-bold text-gray-400 uppercase" data-i18n="account_label">Mi Cuenta</p>
-                            <p class="text-sm font-extrabold text-gray-800" data-i18n="account_guest">Invitado</p>
-                        </div>
-                        <div class="py-1">
-                            <button onclick='openAuthModal("register")' class="w-full text-left px-4 py-2.5 text-sm font-bold text-gray-700 hover:bg-orange-50 hover:text-reshop-orange flex items-center space-x-2.5 transition-colors">
-                                <i class="fa-solid fa-user-plus text-xs"></i> <span data-i18n="menu_register">Registrarse</span>
-                            </button>
-                            <button onclick='openAuthModal("login")' class="w-full text-left px-4 py-2.5 text-sm font-bold text-gray-700 hover:bg-orange-50 hover:text-reshop-orange flex items-center space-x-2.5 transition-colors">
-                                <i class="fa-solid fa-right-to-bracket text-xs"></i> <span data-i18n="menu_login">Iniciar sesión</span>
-                            </button>
-                        </div>
-                        <div class="border-t border-gray-100 pt-1">
-                            <button onclick='switchTab("ajustes"), closeUserMenu()' class="w-full text-left px-4 py-2.5 text-sm font-bold text-gray-700 hover:bg-gray-50 flex items-center space-x-2.5 transition-colors">
-                                <i class="fa-solid fa-gear text-xs text-gray-500"></i> <span data-i18n="tab_settings">Ajustes</span>
-                            </button>
-                        </div>
+                    <div onclick='switchTab("ajustes")' class="w-11 h-11 rounded-full bg-gray-50 border border-gray-200 shadow-sm flex items-center justify-center overflow-hidden text-gray-700 font-bold cursor-pointer hover:border-reshop-orange transition-colors" title="Ajustes">
+                        <i class="fa-solid fa-gear text-sm"></i>
                     </div>
                 </div>
 
@@ -353,26 +334,15 @@
         </div>
     </div>
 
-    <div id="auth-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl p-6 relative">
-            <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-gray-100 transition-colors"><i class="fa-solid fa-xmark text-sm"></i></button>
-            <div id="auth-modal-content" class="space-y-4"></div>
-        </div>
-    </div>
-
     <script>
         const translations = {
             es: {
                 tab_games: "Juegos",
                 tab_ports: "Ports",
                 tab_settings: "Ajustes",
-                account_label: "Mi Cuenta",
-                account_guest: "Invitado",
                 requires_utorrent: "Requiere uTorrent o Clientes Compatibles",
                 downloads_label: "descargas",
                 refresh_btn: "Actualizar catálogo",
-                menu_register: "Registrarse",
-                menu_login: "Iniciar sesión",
                 popular_heading: "Lo más popular",
                 popular_sub: "Los títulos más buscados por la comunidad",
                 newest_heading: "Lo más nuevo",
@@ -421,13 +391,9 @@
                 tab_games: "Games",
                 tab_ports: "Ports",
                 tab_settings: "Settings",
-                account_label: "My Account",
-                account_guest: "Guest",
                 requires_utorrent: "Requires uTorrent or Compatible Clients",
                 downloads_label: "downloads",
                 refresh_btn: "Refresh catalog",
-                menu_register: "Register",
-                menu_login: "Sign In",
                 popular_heading: "Most Popular",
                 popular_sub: "Most searched titles by the community",
                 newest_heading: "Newest Releases",
@@ -550,63 +516,6 @@
             }
 
             renderPopularAndNewest();
-        }
-
-        function toggleUserMenu(e) {
-            e.stopPropagation();
-            document.getElementById("user-dropdown-menu").classList.toggle("hidden");
-        }
-
-        function closeUserMenu() {
-            const menu = document.getElementById("user-dropdown-menu");
-            if (menu) menu.classList.add("hidden");
-        }
-
-        function openAuthModal(type) {
-            closeUserMenu();
-            const modal = document.getElementById("auth-modal");
-            const content = document.getElementById("auth-modal-content");
-
-            content.innerHTML = type === 'register' ? `
-                <div class="text-center space-y-1">
-                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-reshop-orange flex items-center justify-center mx-auto text-base mb-2"><i class="fa-solid fa-user-plus"></i></div>
-                    <h3 class="text-lg font-black text-gray-900">Crear una cuenta</h3>
-                    <p class="text-xs text-gray-500">Regístrate para guardar tus preferencias</p>
-                </div>
-                <form onsubmit="event.preventDefault(); closeAuthModal();" class="space-y-3">
-                    <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Usuario</label>
-                        <input type="text" required placeholder="Tu nombre" class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-reshop-orange/50">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Contraseña</label>
-                        <input type="password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-reshop-orange/50">
-                    </div>
-                    <button type="submit" class="w-full bg-reshop-orange hover:bg-orange-600 text-white font-bold py-2.5 rounded-2xl shadow-md text-xs transition-colors">Registrarse</button>
-                </form>
-            ` : `
-                <div class="text-center space-y-1">
-                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-reshop-orange flex items-center justify-center mx-auto text-base mb-2"><i class="fa-solid fa-right-to-bracket"></i></div>
-                    <h3 class="text-lg font-black text-gray-900">Iniciar sesión</h3>
-                    <p class="text-xs text-gray-500">Accede a tu cuenta de reShop</p>
-                </div>
-                <form onsubmit="event.preventDefault(); closeAuthModal();" class="space-y-3">
-                    <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Usuario</label>
-                        <input type="text" required placeholder="Tu nombre" class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-reshop-orange/50">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Contraseña</label>
-                        <input type="password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-reshop-orange/50">
-                    </div>
-                    <button type="submit" class="w-full bg-reshop-orange hover:bg-orange-600 text-white font-bold py-2.5 rounded-2xl shadow-md text-xs transition-colors">Entrar</button>
-                </form>
-            `;
-            modal.classList.remove("hidden");
-        }
-
-        function closeAuthModal() {
-            document.getElementById("auth-modal").classList.add("hidden");
         }
 
         function changeLanguage(lang) {
@@ -1257,11 +1166,8 @@
         });
 
         window.addEventListener("click", (e) => {
-            closeUserMenu();
             const gameModal = document.getElementById("game-modal");
             if (e.target === gameModal) closeModal();
-            const authModal = document.getElementById("auth-modal");
-            if (e.target === authModal) closeAuthModal();
         });
     </script>
 </body>
